@@ -1,0 +1,5 @@
+trades.csv
+*.class
+docs/
+.env
+.vscode/

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Paper Trader</title>
+  <style>
+    body { font-family: sans-serif; max-width: 640px; margin: 2rem auto; }
+    .error { color: #b00020; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border-bottom: 1px solid #ddd; padding: .4rem; text-align: left; }
+  </style>
+</head>
+<body>
+  <h1>Paper Trader</h1>
+  <p>Practice buying stocks with no real money.</p>
+
+  <form th:action="@{/trade}" th:object="${tradeForm}" method="post">
+    <p th:each="e : ${#fields.globalErrors()}" class="error" th:text="${e}"></p>
+
+    <label>Ticker <input type="text" th:field="*{symbol}" placeholder="AAPL"></label>
+    <span class="error" th:if="${#fields.hasErrors('symbol')}" th:errors="*{symbol}"></span>
+    <br><br>
+    <label>Shares <input type="number" th:field="*{shares}" min="1"></label>
+    <span class="error" th:if="${#fields.hasErrors('shares')}" th:errors="*{shares}"></span>
+    <br><br>
+    <button type="submit">Buy</button>
+  </form>
+
+  <h2>Practice portfolio</h2>
+  <p th:if="${#lists.isEmpty(trades)}">No trades yet.</p>
+  <table th:unless="${#lists.isEmpty(trades)}">
+    <tr><th>Ticker</th><th>Shares</th><th>Price</th><th>Cost</th><th>When</th></tr>
+    <tr th:each="t : ${trades}">
+      <td th:text="${t.symbol}"></td>
+      <td th:text="${t.shares}"></td>
+      <td th:text="${#numbers.formatDecimal(t.price, 1, 2)}"></td>
+      <td th:text="${#numbers.formatDecimal(t.cost, 1, 2)}"></td>
+      <td th:text="${#temporals.format(t.executedAt, 'MMM d, HH:mm')}"></td>
+    </tr>
+  </table>
+  <p><strong>Total spent: $<span th:text="${#numbers.formatDecimal(total, 1, 2)}">0.00</span></strong></p>
+</body>
+</html>
