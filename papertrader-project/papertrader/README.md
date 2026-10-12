@@ -29,16 +29,4 @@ Author: Austin Lantz
    On PowerShell: `$env:FINNHUB_API_KEY="your_key_here"; .\mvnw.cmd spring-boot:run`
 5. Open http://localhost:8080
 
-## Tests
-```
-./mvnw test
-```
 
-## Javadoc
-```
-./mvnw javadoc:javadoc
-```
-
-## What I learned
-(Add your notes here: pros, cons, problems you hit, and what you would
-recommend to your team.)
